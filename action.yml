@@ -19,4 +19,4 @@ runs:
   args:
     - ${{inputs.action}}
     - ${{inputs.needsBioc}}
-    - ${{input.buildSubDirectory}}
+    - ${{inputs.buildSubDirectory}}
