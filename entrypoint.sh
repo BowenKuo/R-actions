@@ -1,25 +1,5 @@
 #!/bin/sh -l
 
-# Setup default parameters
-export BUILD_DIR="./"
-
-while getopts ":d:" opt; do
-  case $opt in
-    d)
-      echo "-d was triggered, Parameter: $OPTARG" >&2
-      export BUILD_SUBDIR=$OPTARG
-      ;;
-    \?)
-      echo "Invalid option: -$OPTARG" >&2
-      exit 1
-      ;;
-    :)
-      echo "Option -$OPTARG requires an argument." >&2
-      exit 1
-      ;;
-  esac
-done
-
 # Install R
 echo "\e[1mInstalling R and dependencies"
 apt-get update
@@ -36,14 +16,14 @@ Rscript -e 'sessionInfo()'
 # Check for build only
 if [ "$1" = "build" ]; then
     echo "\e[33m\e[1mRunning only build task"
-    R CMD build $BUILD_DIR
+    R CMD build $3
 fi
 
 # Build and check
 if [ "$1" = "all" ]; then
     echo "\e[33m\e[1mRunning all tasks"
     echo "\e[33m\e[1mStart package build."
-    R CMD build $BUILD_DIR
+    R CMD build $3
     echo "\e[33m\e[1mPackage build ended."
     # Check if description file exist
     if [ -f DESCRIPTION ]; then
